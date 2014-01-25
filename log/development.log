@@ -1,0 +1,357 @@
+  [1m[36m (111.1ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (216.9ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to CreateEvents (20100317062400)
+  [1m[35m (128.7ms)[0m  CREATE TABLE `events` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `url` varchar(255), `starttime` datetime, `endtime` datetime, `all_day` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100317062400')
+  [1m[36m (62.2ms)[0m  [1mCOMMIT[0m
+Migrating to AddDescriptionToEvent (20100319102122)
+  [1m[35m (242.2ms)[0m  ALTER TABLE `events` ADD `description` text
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100319102122')
+  [1m[36m (39.0ms)[0m  [1mCOMMIT[0m
+Migrating to RemoveUrlFromEvent (20100319102139)
+  [1m[35m (284.3ms)[0m  ALTER TABLE `events` DROP `url`
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100319102139')
+  [1m[36m (39.1ms)[0m  [1mCOMMIT[0m
+Migrating to CreateEventSeries (20100330111648)
+  [1m[35m (140.6ms)[0m  CREATE TABLE `event_series` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `frequency` int(11) DEFAULT 1, `period` varchar(255) DEFAULT 'monthly', `starttime` datetime, `endtime` datetime, `all_day` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20100330111648')
+  [1m[36m (39.2ms)[0m  [1mCOMMIT[0m
+Migrating to AddEventSeriesToEvent (20100330111833)
+  [1m[35m (243.7ms)[0m  ALTER TABLE `events` ADD `event_series_id` int(11)
+  [1m[36m (208.4ms)[0m  [1mCREATE INDEX `index_events_on_event_series_id` ON `events` (`event_series_id`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20100330111833')[0m
+  [1m[35m (39.5ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+
+
+Started GET "/" for 127.0.0.1 at 2014-01-25 11:25:11 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by EventsController#index as HTML
+  Rendered events/index.html.erb within layouts/application (3.6ms)
+Completed 200 OK in 656ms (Views: 617.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/gcal.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/jquery-ui-1.10.3.custom.min.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/fullcalendar.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/jquery-ui-1.10.3.custom.css?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/style.css?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/fullcalendar.css?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+
+
+Started GET "/events/get_events?start=1390069800&end=1390674600&_=1390629312426" for 127.0.0.1 at 2014-01-25 11:25:12 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1390069800", "end"=>"1390674600", "_"=>"1390629312426"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[35mEvent Load (0.6ms)[0m  SELECT `events`.* FROM `events` WHERE (starttime >= '2014-01-19 00:00:00' and endtime <= '2014-01-26 00:00:00')
+  Rendered text template (0.0ms)
+Completed 200 OK in 18ms (Views: 2.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/events/get_events?start=1388255400&end=1391884200&_=1390629312427" for 127.0.0.1 at 2014-01-25 11:25:29 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1388255400", "end"=>"1391884200", "_"=>"1390629312427"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[36mEvent Load (0.6ms)[0m  [1mSELECT `events`.* FROM `events` WHERE (starttime >= '2013-12-29 00:00:00' and endtime <= '2014-02-09 00:00:00')[0m
+  Rendered text template (0.0ms)
+Completed 200 OK in 6ms (Views: 0.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/events/new" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+Processing by EventsController#new as */*
+  Rendered events/_form.html.erb (52.4ms)
+Completed 200 OK in 87ms (Views: 5.4ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/assets/images/ui-bg_highlight-soft_100_eeeeee_1x100.png" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+
+
+Started GET "/assets/images/ui-icons_222222_256x240.png" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+
+
+Started GET "/assets/images/ui-bg_gloss-wave_35_f6a828_500x100.png" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+
+
+Started GET "/assets/images/ui-bg_glass_100_f6f6f6_1x400.png" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+
+
+Started GET "/assets/images/ui-icons_ef8c08_256x240.png" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+
+
+Started GET "/assets/images/ui-bg_diagonals-thick_20_666666_40x40.png" for 127.0.0.1 at 2014-01-25 11:25:35 +0530
+
+
+Started GET "/assets/images/ui-bg_glass_100_fdf5ce_1x400.png" for 127.0.0.1 at 2014-01-25 11:25:42 +0530
+
+
+Started GET "/assets/images/ui-bg_glass_65_ffffff_1x400.png" for 127.0.0.1 at 2014-01-25 11:25:43 +0530
+
+
+Started GET "/events/new" for 127.0.0.1 at 2014-01-25 11:25:46 +0530
+Processing by EventsController#new as */*
+  Rendered events/_form.html.erb (24.0ms)
+Completed 200 OK in 37ms (Views: 5.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/events" for 127.0.0.1 at 2014-01-25 11:26:02 +0530
+Processing by EventsController#create as */*
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9iJIw/2MpCUdwKtBW8GwwBfJ3UhKTTZyFQjp/DWqGgg=", "event"=>{"title"=>"Coding", "description"=>"", "starttime(1i)"=>"2014", "starttime(2i)"=>"1", "starttime(3i)"=>"25", "starttime(4i)"=>"05", "starttime(5i)"=>"55", "endtime(1i)"=>"2014", "endtime(2i)"=>"2", "endtime(3i)"=>"25", "endtime(4i)"=>"06", "endtime(5i)"=>"55", "all_day"=>"1", "period"=>"Does not repeat", "frequency"=>"1", "id"=>""}}
+Unpermitted parameters: id
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  Rendered text template (0.0ms)
+Completed 422 Unprocessable Entity in 10ms (Views: 0.8ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/events" for 127.0.0.1 at 2014-01-25 11:26:08 +0530
+Processing by EventsController#create as */*
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9iJIw/2MpCUdwKtBW8GwwBfJ3UhKTTZyFQjp/DWqGgg=", "event"=>{"title"=>"Coding", "description"=>"Coding", "starttime(1i)"=>"2014", "starttime(2i)"=>"1", "starttime(3i)"=>"25", "starttime(4i)"=>"05", "starttime(5i)"=>"55", "endtime(1i)"=>"2014", "endtime(2i)"=>"2", "endtime(3i)"=>"25", "endtime(4i)"=>"06", "endtime(5i)"=>"55", "all_day"=>"1", "period"=>"Does not repeat", "frequency"=>"1", "id"=>""}}
+Unpermitted parameters: id
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO `events` (`all_day`, `created_at`, `description`, `endtime`, `starttime`, `title`, `updated_at`) VALUES (1, '2014-01-25 05:56:08', 'Coding', '2014-02-25 06:55:00', '2014-01-25 05:55:00', 'Coding', '2014-01-25 05:56:08')[0m
+  [1m[35m (69.1ms)[0m  COMMIT
+  Rendered text template (0.0ms)
+Completed 200 OK in 79ms (Views: 0.7ms | ActiveRecord: 69.7ms)
+
+
+Started GET "/events/get_events?start=1388255400&end=1391884200&_=1390629312428" for 127.0.0.1 at 2014-01-25 11:26:09 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1388255400", "end"=>"1391884200", "_"=>"1390629312428"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[36mEvent Load (14.6ms)[0m  [1mSELECT `events`.* FROM `events` WHERE (starttime >= '2013-12-29 00:00:00' and endtime <= '2014-02-09 00:00:00')[0m
+  Rendered text template (0.1ms)
+Completed 200 OK in 21ms (Views: 1.3ms | ActiveRecord: 14.6ms)
+
+
+Started GET "/events/get_events?start=1390674600&end=1394303400&_=1390629312429" for 127.0.0.1 at 2014-01-25 11:26:16 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1390674600", "end"=>"1394303400", "_"=>"1390629312429"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[35mEvent Load (0.8ms)[0m  SELECT `events`.* FROM `events` WHERE (starttime >= '2014-01-26 00:00:00' and endtime <= '2014-03-09 00:00:00')
+  Rendered text template (0.0ms)
+Completed 200 OK in 6ms (Views: 0.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/events/get_events?start=1388255400&end=1391884200&_=1390629312430" for 127.0.0.1 at 2014-01-25 11:26:27 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1388255400", "end"=>"1391884200", "_"=>"1390629312430"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT `events`.* FROM `events` WHERE (starttime >= '2013-12-29 00:00:00' and endtime <= '2014-02-09 00:00:00')[0m
+  Rendered text template (0.0ms)
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/events/get_events?start=1390674600&end=1394303400&_=1390629312431" for 127.0.0.1 at 2014-01-25 11:26:31 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1390674600", "end"=>"1394303400", "_"=>"1390629312431"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[35mEvent Load (0.4ms)[0m  SELECT `events`.* FROM `events` WHERE (starttime >= '2014-01-26 00:00:00' and endtime <= '2014-03-09 00:00:00')
+  Rendered text template (0.0ms)
+Completed 200 OK in 5ms (Views: 1.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/events/get_events?start=1388255400&end=1391884200&_=1390629312432" for 127.0.0.1 at 2014-01-25 11:26:32 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1388255400", "end"=>"1391884200", "_"=>"1390629312432"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[36mEvent Load (0.3ms)[0m  [1mSELECT `events`.* FROM `events` WHERE (starttime >= '2013-12-29 00:00:00' and endtime <= '2014-02-09 00:00:00')[0m
+  Rendered text template (0.0ms)
+Completed 200 OK in 5ms (Views: 0.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/events/new" for 127.0.0.1 at 2014-01-25 11:26:34 +0530
+Processing by EventsController#new as */*
+  Rendered events/_form.html.erb (23.5ms)
+Completed 200 OK in 36ms (Views: 5.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/events" for 127.0.0.1 at 2014-01-25 11:26:59 +0530
+Processing by EventsController#create as */*
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9iJIw/2MpCUdwKtBW8GwwBfJ3UhKTTZyFQjp/DWqGgg=", "event"=>{"title"=>"Coding", "description"=>"Coding", "starttime(1i)"=>"2014", "starttime(2i)"=>"1", "starttime(3i)"=>"25", "starttime(4i)"=>"05", "starttime(5i)"=>"55", "endtime(1i)"=>"2014", "endtime(2i)"=>"1", "endtime(3i)"=>"26", "endtime(4i)"=>"06", "endtime(5i)"=>"55", "all_day"=>"0", "period"=>"Does not repeat", "frequency"=>"1", "id"=>""}}
+Unpermitted parameters: id
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `events` (`created_at`, `description`, `endtime`, `starttime`, `title`, `updated_at`) VALUES ('2014-01-25 05:56:59', 'Coding', '2014-01-26 06:55:00', '2014-01-25 05:55:00', 'Coding', '2014-01-25 05:56:59')[0m
+  [1m[35m (90.4ms)[0m  COMMIT
+  Rendered text template (0.0ms)
+Completed 200 OK in 99ms (Views: 0.7ms | ActiveRecord: 91.0ms)
+
+
+Started GET "/events/get_events?start=1388255400&end=1391884200&_=1390629312433" for 127.0.0.1 at 2014-01-25 11:26:59 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1388255400", "end"=>"1391884200", "_"=>"1390629312433"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[36mEvent Load (0.6ms)[0m  [1mSELECT `events`.* FROM `events` WHERE (starttime >= '2013-12-29 00:00:00' and endtime <= '2014-02-09 00:00:00')[0m
+  Rendered text template (0.1ms)
+Completed 200 OK in 16ms (Views: 1.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/events/2/edit" for 127.0.0.1 at 2014-01-25 11:27:06 +0530
+Processing by EventsController#edit as */*
+  Parameters: {"id"=>"2"}
+  [1m[35mEvent Load (0.5ms)[0m  SELECT `events`.* FROM `events` WHERE `events`.`id` = 2 LIMIT 1
+  Rendered events/_edit_form.html.erb (31.2ms)
+Completed 200 OK in 50ms (Views: 5.5ms | ActiveRecord: 0.5ms)
+
+
+Started PATCH "/events/2" for 127.0.0.1 at 2014-01-25 11:27:09 +0530
+Processing by EventsController#update as */*
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9iJIw/2MpCUdwKtBW8GwwBfJ3UhKTTZyFQjp/DWqGgg=", "event"=>{"title"=>"Coding", "description"=>"Coding", "starttime(1i)"=>"2014", "starttime(2i)"=>"1", "starttime(3i)"=>"25", "starttime(4i)"=>"05", "starttime(5i)"=>"55", "endtime(1i)"=>"2014", "endtime(2i)"=>"1", "endtime(3i)"=>"26", "endtime(4i)"=>"06", "endtime(5i)"=>"55", "all_day"=>"0", "id"=>"2", "commit_button"=>"Update"}, "id"=>"2"}
+  [1m[36mEvent Load (0.2ms)[0m  [1mSELECT `events`.* FROM `events` WHERE `events`.`id` = 2 LIMIT 1[0m
+Unpermitted parameters: id
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mCOMMIT[0m
+  Rendered text template (0.0ms)
+Completed 200 OK in 9ms (Views: 1.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/events/get_events?start=1388255400&end=1391884200&_=1390629312434" for 127.0.0.1 at 2014-01-25 11:27:09 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1388255400", "end"=>"1391884200", "_"=>"1390629312434"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[35mEvent Load (0.3ms)[0m  SELECT `events`.* FROM `events` WHERE (starttime >= '2013-12-29 00:00:00' and endtime <= '2014-02-09 00:00:00')
+  Rendered text template (0.0ms)
+Completed 200 OK in 9ms (Views: 1.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/events/new" for 127.0.0.1 at 2014-01-25 11:35:08 +0530
+Processing by EventsController#new as */*
+  Rendered events/_form.html.erb (25.7ms)
+Completed 200 OK in 39ms (Views: 6.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+Processing by EventsController#index as HTML
+  Rendered events/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 23ms (Views: 21.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/gcal.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/fullcalendar.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/jquery-ui-1.10.3.custom.min.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/jquery-ui-1.10.3.custom.css?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/fullcalendar.css?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/style.css?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-01-25 11:38:43 +0530
+
+
+Started GET "/events/get_events?start=1390069800&end=1390674600&_=1390630123540" for 127.0.0.1 at 2014-01-25 11:38:44 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1390069800", "end"=>"1390674600", "_"=>"1390630123540"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[36mEvent Load (0.7ms)[0m  [1mSELECT `events`.* FROM `events` WHERE (starttime >= '2014-01-19 00:00:00' and endtime <= '2014-01-26 00:00:00')[0m
+  Rendered text template (0.0ms)
+Completed 200 OK in 5ms (Views: 1.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+Processing by EventsController#index as HTML
+  Rendered events/index.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 17ms (Views: 15.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/gcal.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/jquery-ui-1.10.3.custom.min.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/fullcalendar.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/fullcalendar.css?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/style.css?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/assets/jquery-ui-1.10.3.custom.css?body=1" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+
+
+Started GET "/events/get_events?start=1390069800&end=1390674600&_=1390630162537" for 127.0.0.1 at 2014-01-25 11:39:22 +0530
+Processing by EventsController#get_events as JSON
+  Parameters: {"start"=>"1390069800", "end"=>"1390674600", "_"=>"1390630162537"}
+DEPRECATION WARNING: Calling #find(:all) is deprecated. Please call #all directly instead. You have also used finder options. These are also deprecated. Please build a scope instead of using finder options. (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+DEPRECATION WARNING: Relation#all is deprecated. If you want to eager-load a relation, you can call #load (e.g. `Post.where(published: true).load`). If you want to get an array of records from a relation, you can call #to_a (e.g. `Post.where(published: true).to_a`). (called from get_events at /home/fstech/wp/fullcalendar_rails/app/controllers/events_controller.rb:28)
+  [1m[35mEvent Load (0.3ms)[0m  SELECT `events`.* FROM `events` WHERE (starttime >= '2014-01-19 00:00:00' and endtime <= '2014-01-26 00:00:00')
+  Rendered text template (0.0ms)
+Completed 200 OK in 5ms (Views: 0.9ms | ActiveRecord: 0.3ms)
